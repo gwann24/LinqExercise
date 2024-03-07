@@ -22,33 +22,73 @@ namespace LinqExercise
 
             //TODO: Print the Sum of numbers
 
+            Console.WriteLine($"Sum: {numbers.Sum()}");
+
             //TODO: Print the Average of numbers
+
+            Console.WriteLine($"Average: {numbers.Average()}");
 
             //TODO: Order numbers in ascending order and print to the console
 
+            Console.WriteLine("List in Ascending Order:");
+            numbers.OrderBy(x => x).ToList().ForEach(x => { Console.WriteLine(x); });
+
             //TODO: Order numbers in descending order and print to the console
+
+            Console.WriteLine("\nList in Descending Order:");
+            numbers.OrderByDescending(x => x).ToList().ForEach(x => { Console.WriteLine(x); });
 
             //TODO: Print to the console only the numbers greater than 6
 
+            Console.WriteLine("\nNumbers in the list > 6:");
+            numbers.Where(x => x > 6).ToList().ForEach(x => { Console.WriteLine(x); });
+
             //TODO: Order numbers in any order (ascending or desc) but only print 4 of them **foreach loop only!**
 
+            Console.WriteLine("First 4 of 10 numbers in Ascending Order:");
+            numbers.OrderBy(x => x).Take(4).ToList().ForEach(x => { Console.WriteLine(x); });
+
             //TODO: Change the value at index 4 to your age, then print the numbers in descending order
+
+            numbers.SetValue(55, 4);
+            Console.WriteLine("\nUpdated List in Descending Order:");
+            numbers.OrderByDescending(x => x).ToList().ForEach(x => { Console.WriteLine(x); });
 
             // List of employees ****Do not remove this****
             var employees = CreateEmployees();
 
             //TODO: Print all the employees' FullName properties to the console only if their FirstName starts with a C OR an S and order this in ascending order by FirstName.
 
+            Console.WriteLine("\nList of Employees with First Name starts with 'C' or 'S':");
+            employees.Where(x => Char.ToUpper(x.FirstName[0]) == 'C' || Char.ToUpper(x.FirstName[0]) == 'S').OrderBy(x => x.FirstName).ToList().ForEach(x =>  Console.WriteLine(x.FullName));
+
             //TODO: Print all the employees' FullName and Age who are over the age 26 to the console and order this by Age first and then by FirstName in the same result.
+
+            Console.WriteLine("\nList of Employees Older than 26 sorted by Age, FirstName:");
+            employees.Where(x => x.Age > 26).OrderBy(x => x.Age).ThenBy(x => x.FirstName).ToList().ForEach(x => Console.WriteLine($"Name: {x.FullName}\t\tAge: {x.Age}"));
 
             //TODO: Print the Sum of the employees' YearsOfExperience if their YOE is less than or equal to 10 AND Age is greater than 35.
 
+            Console.WriteLine("\nSum of YOE for Employees Older than 35 and YOE <= 10:");
+            Console.WriteLine(employees.Where(x => x.Age > 35 && x.YearsOfExperience <= 10).Sum(x => x.YearsOfExperience));
+
             //TODO: Now print the Average of the employees' YearsOfExperience if their YOE is less than or equal to 10 AND Age is greater than 35.
+
+            Console.WriteLine("\nAverage YOE for Employees Older than 35 and YOE <= 10:");
+            Console.WriteLine(employees.Where(x => x.Age > 35 && x.YearsOfExperience <= 10).Average(x => x.YearsOfExperience));
 
             //TODO: Add an employee to the end of the list without using employees.Add()
 
+            Console.WriteLine("Number of Employees BEFORE new Employee Add:");
+            Console.WriteLine(employees.Count);
+            employees = employees.Append(new Employee("Greg", "Wanner", 55, 1)).ToList();
+            Console.WriteLine("Number of Employees AFTER new Employee Add:");
+            Console.WriteLine(employees.Count);
+            Console.WriteLine("List of Current Employees:");
+            employees.OrderBy(x => x.LastName).ToList().ForEach(x => Console.WriteLine(x.FullName));
+            //Select(x => { x.FirstName = "Greg"; x.LastName = "Wanner"; x.YearsOfExperience = 1; x.Age = 55; }).ToList();
 
-            Console.WriteLine();
+            //Console.WriteLine();
 
             Console.ReadLine();
         }
